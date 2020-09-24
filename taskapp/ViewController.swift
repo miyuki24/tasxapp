@@ -8,8 +8,10 @@
 
 import UIKit
 
-//Realmも使うために書く
 import RealmSwift
+
+//ユーザの通知
+import UserNotifications
 
 class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate{
     
@@ -74,10 +76,27 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
+            
+            //削除するタスクを得る
+            let task = self.taskArray[indexPath.row]
+            
+            //通知をキャンセルする
+            let center = UNUserNotificationCenter.current()
+            center.removePendingNotificationRequests(withIdentifiers: [String(task.id)])
+            
             // データベースから削除する
             try! realm.write {
                 self.realm.delete(self.taskArray[indexPath.row])
                 tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            
+            //未通知の通知一覧をログ出力
+            center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
+                for request in requests {
+                    print("/---------------")
+                    print(request)
+                    print("---------------/")
+                }
             }
         }
     }

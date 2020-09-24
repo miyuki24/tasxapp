@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8pZ-tk-P0L">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8pZ-tk-P0L">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -138,6 +138,7 @@
                     <connections>
                         <outlet property="contentsTextView" destination="jD2-O6-0sV" id="IZF-ZU-h8E"/>
                         <outlet property="datePicker" destination="zEo-YM-pgE" id="vcc-hU-fLS"/>
+                        <outlet property="titleTextField" destination="fml-KB-1B7" id="ow4-sv-lHT"/>
                         <outlet property="titleTextFiled" destination="fml-KB-1B7" id="jWo-K4-kiv"/>
                         <outlet property="titleTextView" destination="fml-KB-1B7" id="eva-f0-Fde"/>
                     </connections>

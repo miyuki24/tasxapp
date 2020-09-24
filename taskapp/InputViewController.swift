@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import UserNotifications
 
 class InputViewController: UIViewController {
     
@@ -45,10 +46,53 @@ class InputViewController: UIViewController {
             self.task.date = self.datePicker.date
             self.realm.add(self.task, update: .modified)
         }
+        setNotification(task: task)
 
         super.viewWillDisappear(animated)
     }
 
+    //通知をセット
+    func setNotification(task: Task) {
+    let content = UNMutableNotificationContent()
+    
+    // タイトルと内容を設定
+    if task.title == "" {
+        content.title = "(タイトルなし)"
+    } else {
+        content.title = task.title
+    }
+    if task.contents == "" {
+        content.body = "(内容なし)"
+    } else {
+        content.body = task.contents
+    }
+    content.sound = UNNotificationSound.default
+
+    //通知が発動する日付（trigger）を作成
+    let calendar = Calendar.current
+    let dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: task.date)
+    let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+    
+    //通知を作成（identifierが同じだとローカル通知を上書き保存）
+    let request = UNNotificationRequest(identifier: String(task.id), content: content, trigger: trigger)
+
+        //通知を登録
+        let center = UNUserNotificationCenter.current()
+        center.add(request) { (error) in
+            
+            //error が nil なら"ローカル通知登録 OK"がログに表示される
+            print(error ?? "ローカル通知登録 OK")
+        }
+
+        // 未通知の通知一覧をログ出力
+        center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
+            for request in requests {
+                print("/---------------")
+                print(request)
+                print("---------------/")
+            }
+        }
+    }
     /*
     // MARK: - Navigation
 

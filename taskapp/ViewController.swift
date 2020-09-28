@@ -19,6 +19,8 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     
     let realm = try! Realm()
     
+    let category:String
+    
     // データベース内のタスクが格納されるリスト
     // 日付の近い順でソート：昇順
     // 以降内容をアップデートするとリスト内は自動的に更新される

@@ -12,9 +12,13 @@ import UserNotifications
 
 class InputViewController: UIViewController {
     
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentsTextView: UITextView!
     @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var categoryTextFiled: UITextField!
+    
 
     let realm = try! Realm()
     var task: Task!
@@ -24,13 +28,13 @@ class InputViewController: UIViewController {
         super.viewDidLoad()
 
         // 背景をタップしたらdismissKeyboardメソッドを呼ぶ
-        //タップを判断するにはUITapGestureRecognizerクラスを使う
         let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(dismissKeyboard))
         self.view.addGestureRecognizer(tapGesture)
 
         titleTextField.text = task.title
         contentsTextView.text = task.contents
         datePicker.date = task.date
+        categoryTextFiled.text = task.category
     }
     
     //キーボードを閉じるためのメソッド
@@ -41,9 +45,11 @@ class InputViewController: UIViewController {
     //遷移する際、画面が非表示になるとき呼ばれるメソッド
     override func viewWillDisappear(_ animated: Bool) {
         try! realm.write {
+            
             self.task.title = self.titleTextField.text!
             self.task.contents = self.contentsTextView.text
             self.task.date = self.datePicker.date
+            self.task.category = self.categoryTextFiled.text!
             self.realm.add(self.task, update: .modified)
         }
         setNotification(task: task)

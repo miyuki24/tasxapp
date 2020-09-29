@@ -17,23 +17,30 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     
     @IBOutlet weak var tableView: UITableView!
     
-    let realm = try! Realm()
+    @IBOutlet weak var searchBar: UISearchBar!
     
-    let category:String
+    let realm = try! Realm()
     
     // データベース内のタスクが格納されるリスト
     // 日付の近い順でソート：昇順
     // 以降内容をアップデートするとリスト内は自動的に更新される
     var taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: true)
     
+    var searchResult: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //ViewControllerをデリゲートとして実装を任せた
         tableView.delegate = self
         tableView.dataSource = self
+        
+        //何も入力されていなくてもReturnキーを押せるようにする。
+        searchBar.enablesReturnKeyAutomatically = false
+        
+        searchResult = Category
     }
     
-    //データの数（＝セルの数）を返すメソッド
+    //セルの数を返す
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         //taskArrayの要素数を返す
@@ -46,7 +53,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         //再利用可能な cell を得る
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        //Cellに値を設定する
+        //Cellに値を表示させる
         let task = taskArray[indexPath.row]
         cell.textLabel?.text = task.title
         
@@ -54,6 +61,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
         
+        //cellに時間を表示させる
         let dateString:String = formatter.string(from: task.date)
         cell.detailTextLabel?.text = dateString
         
@@ -63,7 +71,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     //セルをタップした時にタスク入力画面に遷移させるメソッド
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //segueのIDを指定して遷移させる
+        //segueのID（＝cellSegue）を指定して遷移させる
         performSegue(withIdentifier: "cellSegue",sender: nil)
     }
     
@@ -101,6 +109,29 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
                 }
             }
         }
+    }
+    
+    //検索ボタンが押された時に呼ばれるメソッド
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+        
+        //検索結果配列を空にする
+        searchResult.removeAll()
+        
+        if(searchBar.text == "") {
+            //検索文字が空の場合はすべてを表示する
+            searchResult = Category
+        } else {
+            //検索文字を含むデータを検索結果に追加する
+            for data in Category {
+                if data.containsString(testSearchBar.text!) {
+                    searchResult.append(data)
+                }
+            }
+        }
+        
+        //再読み込みする
+        tableView.reloadData()
     }
     
     //画面遷移するときに呼ばれる

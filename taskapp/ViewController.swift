@@ -26,8 +26,6 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     // 以降内容をアップデートするとリスト内は自動的に更新される
     var taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: true)
     
-    var searchResult: [String] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         //ViewControllerをデリゲートとして実装を任せた
@@ -35,10 +33,6 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         tableView.dataSource = self
         testsearchBar.delegate = self
         
-        //何も入力されていなくてもReturnキーを押せるようにする。
-        testsearchBar.enablesReturnKeyAutomatically = false
-        
-        searchResult =
     }
     
     //セルの数を返す
@@ -112,26 +106,19 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         }
     }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        let predicate = NSPredicate(format: "%@")
+        taskArray = realm.objects(Task.self).filter(predicate)
+        searchBar.resignFirstResponder()
+    }
+    
     //検索ボタンが押された時に呼ばれるメソッド
-    func searchBarSearchButtonClicked(_ tableView: UITableView, searchBar: UISearchBar) {
-        testsearchBar.endEditing(true)
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+            
+        let searchText = searchBar.text!
         
-        let task = self.taskArray[indexPath.row]
-        
-        //検索結果配列を空にする
-        searchResult.removeAll()
-        
-        if(testsearchBar.text == "") {
-            //検索文字が空の場合はすべてを表示する
-            searchResult = task.category
-        } else {
-            //検索文字を含むデータを検索結果に追加する
-            for data in task.category {
-                if data.containsString(searchBar.text!) {
-                    searchResult.append(data)
-                }
-            }
-        }
+        let predicate = NSPredicate(format: "%@", searchText)
+        taskArray = realm.objects(Task.self).filter(predicate)
         
         //再読み込みする
         tableView.reloadData()

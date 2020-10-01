@@ -13,11 +13,11 @@ import RealmSwift
 //ユーザの通知
 import UserNotifications
 
-class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate{
+class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate{
     
     @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var testsearchBar: UISearchBar!
     
     let realm = try! Realm()
     
@@ -33,11 +33,12 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         //ViewControllerをデリゲートとして実装を任せた
         tableView.delegate = self
         tableView.dataSource = self
+        testsearchBar.delegate = self
         
         //何も入力されていなくてもReturnキーを押せるようにする。
-        searchBar.enablesReturnKeyAutomatically = false
+        testsearchBar.enablesReturnKeyAutomatically = false
         
-        searchResult = Category
+        searchResult =
     }
     
     //セルの数を返す
@@ -112,19 +113,21 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     }
     
     //検索ボタンが押された時に呼ばれるメソッド
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        searchBar.endEditing(true)
+    func searchBarSearchButtonClicked(_ tableView: UITableView, searchBar: UISearchBar) {
+        testsearchBar.endEditing(true)
+        
+        let task = self.taskArray[indexPath.row]
         
         //検索結果配列を空にする
         searchResult.removeAll()
         
-        if(searchBar.text == "") {
+        if(testsearchBar.text == "") {
             //検索文字が空の場合はすべてを表示する
-            searchResult = Category
+            searchResult = task.category
         } else {
             //検索文字を含むデータを検索結果に追加する
-            for data in Category {
-                if data.containsString(testSearchBar.text!) {
+            for data in task.category {
+                if data.containsString(searchBar.text!) {
                     searchResult.append(data)
                 }
             }

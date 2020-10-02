@@ -32,7 +32,6 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         tableView.delegate = self
         tableView.dataSource = self
         testsearchBar.delegate = self
-        
     }
     
     //セルの数を返す

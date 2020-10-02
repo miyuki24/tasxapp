@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ehf-Du-1Zj">
-                                <rect key="frame" x="0.0" y="94" width="375" height="573"/>
+                                <rect key="frame" x="0.0" y="100" width="375" height="567"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="SRP-Za-Vfc" detailTextLabel="f9m-AZ-13f" style="IBUITableViewCellStyleSubtitle" id="Us1-Yf-sCK">
@@ -45,40 +45,39 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <searchBar contentMode="redraw" id="rrY-xU-eXn">
-                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="AcU-TL-clb">
+                                <rect key="frame" x="0.0" y="44" width="375" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="rrY-xU-eXn" firstAttribute="trailing" secondItem="ehf-Du-1Zj" secondAttribute="trailing" id="1Br-Ez-OAg"/>
+                            <constraint firstItem="AcU-TL-clb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="AWf-E0-4Lm"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ehf-Du-1Zj" secondAttribute="trailing" id="B4g-EI-B0D"/>
-                            <constraint firstItem="ehf-Du-1Zj" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="EHM-tj-Mh8"/>
                             <constraint firstItem="ehf-Du-1Zj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="L44-IO-mEa"/>
+                            <constraint firstItem="AcU-TL-clb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="OfH-ia-VIt"/>
+                            <constraint firstItem="AcU-TL-clb" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="QyC-KH-wUJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ehf-Du-1Zj" secondAttribute="bottom" id="YAQ-Za-EQM"/>
-                            <constraint firstItem="rrY-xU-eXn" firstAttribute="leading" secondItem="ehf-Du-1Zj" secondAttribute="leading" id="fAs-cs-yQt"/>
+                            <constraint firstItem="ehf-Du-1Zj" firstAttribute="top" secondItem="AcU-TL-clb" secondAttribute="bottom" id="tcg-jL-0Tq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="fhG-AW-koG">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="zXq-DR-QT5">
+                    <navigationItem key="navigationItem" id="OmM-OD-ITY">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="U1S-2w-7le">
                             <connections>
-                                <segue destination="Irt-FF-gUc" kind="show" id="YIU-Y1-R1A"/>
+                                <segue destination="Irt-FF-gUc" kind="show" id="e42-PV-DnE"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchBar" destination="rrY-xU-eXn" id="QJF-CX-XZ0"/>
                         <outlet property="tableView" destination="ehf-Du-1Zj" id="aeE-L5-Ee8"/>
-                        <outlet property="testsearchBar" destination="rrY-xU-eXn" id="yce-A4-O6R"/>
+                        <outlet property="testsearchBar" destination="AcU-TL-clb" id="zNm-l4-Lf5"/>
                         <segue destination="Irt-FF-gUc" kind="show" identifier="cellSegue" id="sFQ-by-KKq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1047.8260869565217" y="129.91071428571428"/>
+            <point key="canvasLocation" x="1047.2" y="129.08545727136433"/>
         </scene>
         <!--Input View Controller-->
         <scene sceneID="5P2-Qt-4Qm">
@@ -168,8 +167,6 @@
                         <outlet property="datePicker" destination="zEo-YM-pgE" id="vcc-hU-fLS"/>
                         <outlet property="titleLabel" destination="tsI-cn-4e2" id="FED-aH-KAc"/>
                         <outlet property="titleTextField" destination="fml-KB-1B7" id="ow4-sv-lHT"/>
-                        <outlet property="titleTextFiled" destination="fml-KB-1B7" id="jWo-K4-kiv"/>
-                        <outlet property="titleTextView" destination="fml-KB-1B7" id="eva-f0-Fde"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NnW-qM-NMF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

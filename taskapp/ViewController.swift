@@ -32,6 +32,9 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         tableView.delegate = self
         tableView.dataSource = self
         testsearchBar.delegate = self
+        
+        //キャンセルボタンの有効を宣言する（searchBarのshowsCancelButtonプロパティ）
+        testsearchBar.showsCancelButton = true
     }
     
     //セルの数を返す
@@ -105,10 +108,15 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         }
     }
     
+    //キャンセルボタンが押された時に呼ばれるメソッド
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        let predicate = NSPredicate(format: "%@")
-        taskArray = realm.objects(Task.self).filter(predicate)
-        searchBar.resignFirstResponder()
+        
+        //テキストを空にする
+        testsearchBar.text = ""
+        
+        taskArray = realm.objects(Task.self)
+        
+        tableView.reloadData()
     }
     
     //検索ボタンが押された時に呼ばれるメソッド

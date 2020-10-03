@@ -116,7 +116,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
             
         let searchText = searchBar.text!
         
-        let predicate = NSPredicate(format: "%@", searchText)
+        let predicate = NSPredicate(format: "category CONTAINS %@", searchText)
         taskArray = realm.objects(Task.self).filter(predicate)
         
         //再読み込みする
